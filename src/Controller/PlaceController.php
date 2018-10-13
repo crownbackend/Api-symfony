@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Place;
+use App\Form\PlaceType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -58,13 +59,18 @@ class PlaceController extends Controller
     {
 
         $place = new Place();
-        $place->setName($request->get('name'))->setAddress($request->get('address'));
+        $form = $this->createForm(PlaceType::class, $place);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($place);
-        $em->flush();
+        $form->submit($request->request->all());
 
-        return $place;
+        if($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($place);
+            $em->flush();
+            return $place;
+        } else {
+            return $form;
+        }
 
     }
 

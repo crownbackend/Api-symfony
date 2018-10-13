@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlaceRepository")
+ * @UniqueEntity("name")
  */
 class Place
 {
@@ -18,11 +21,25 @@ class Place
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="le nom ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Il faut au minimum {{ limit }} caractères",
+     *      maxMessage = "Il faut au maximum {{ limit }} caractères"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="l'adresse ne peut être vide")
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 100,
+     *      minMessage = "Il faut au minimum {{ limit }} caractères",
+     *      maxMessage = "Il faut au maximum {{ limit }} caractères"
+     * )
      */
     private $address;
 
