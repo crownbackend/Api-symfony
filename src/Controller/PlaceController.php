@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Place;
-use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,31 +15,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlaceController extends Controller
 {
     /**
-     * @Get("/places")
+     * @Rest\View()
+     * @Rest\Get("/places")
      * @param Request $request
-     * @return Response
+     * @return View
      */
-    public function getPlaces(Request $request):Response
+    public function getPlaces(Request $request)
     {
 
         $places = $this->getDoctrine()->getRepository(Place::class)->findAll();
 
         /* @var $places Place[] */
 
-        $formatted = [];
-        foreach ($places as $place) {
-            $formatted[] = [
-                'id' => $place->getId(),
-                'name' => $place->getName(),
-                'address' => $place->getAddress(),
-            ];
-        }
+        $view = View::create($places);
+        $view->setFormat('json');
 
-        return new JsonResponse($formatted);
+        return $view;
     }
 
     /**
-     * @Get("/places/{id}")
+     * @Rest\View()
+     * @Rest\Get("/places/{id}")
      * @param Request $request
      * @return Response
      */
