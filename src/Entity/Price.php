@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PriceRepository")
@@ -37,12 +38,16 @@ class Price
      * @ORM\JoinColumn(nullable=false)
      */
     private $place;
-
+    /**
+     * @Groups({"place", "price"})
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    /**
+     * @Groups({"place", "price"})
+     */
     public function getType(): ?string
     {
         return $this->type;
@@ -54,7 +59,9 @@ class Price
 
         return $this;
     }
-
+    /**
+     * @Groups({"place", "price"})
+     */
     public function getValue(): ?float
     {
         return $this->value;
@@ -66,7 +73,9 @@ class Price
 
         return $this;
     }
-
+    /**
+     * @Groups("price")
+     */
     public function getPlace(): ?Place
     {
         return $this->place;

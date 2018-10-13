@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class PriceController extends Controller
 {
     /**
-     * @Rest\view()
+     * @Rest\view(serializerGroups={"price"})
      * @Rest\Get("/places/{id}/prices")
      * @param Request $request
      * @return
@@ -33,7 +33,7 @@ class PriceController extends Controller
     }
 
     /**
-     * @Rest\view(statusCode=Response::HTTP_CREATED)
+     * @Rest\view(statusCode=Response::HTTP_CREATED, serializerGroups={"price"})
      * @Rest\Post("/places/{id}/prices")
      * @param Request $request
      * @return

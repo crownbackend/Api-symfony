@@ -136,7 +136,7 @@ class PlaceController extends Controller
     }
 
     /*
-            App\Entity\Place:
+    App\Entity\Place:
         attributes:
             id:
                 groups: ['place', 'price']
