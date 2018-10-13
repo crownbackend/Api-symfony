@@ -35,7 +35,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/users/{id}")
+     * @Route("/users/{id}", name="users_one", methods="GET")
      * @param Request $request
      * @return Response
      */

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Place;
+use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,10 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-class IndexController extends Controller
+class PlaceController extends Controller
 {
     /**
-     * @Route("/places", methods="GET", name="places_list")
+     * @Get("/places")
      * @param Request $request
      * @return Response
      */
@@ -37,14 +38,14 @@ class IndexController extends Controller
     }
 
     /**
-     * @Route("/places/{place_id}", methods="GET", name="places_one", requirements={"place_id" = "\d+"})
+     * @Get("/places/{id}")
      * @param Request $request
      * @return Response
      */
     public function getPlaceAction(Request $request): Response
     {
 
-        $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('place_id'));
+        $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('id'));
         /* @var $place Place */
 
         if(empty($place)) {
