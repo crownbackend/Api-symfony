@@ -91,20 +91,34 @@ class PlaceController extends Controller
      * @Rest\View()
      * @Rest\Put("/places/{id}")
      * @param Request $request
-     * @return
      */
     public function putPlaceAction(Request $request)
     {
-        $place = $this->getDoctrine()->
-                 getRepository(Place::class)->find($request->get('id'));
-        /* @var $place Place */
-        
-        if(empty($place)) {
-            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+        return $this->updateplace($request, true);
+
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Patch("/places/{id}")
+     * @param Request $request
+     */
+    public function patchPlaceAction(Request $request)
+    {
+        return $this->updateplace($request, false);
+    }
+    
+    /* refactoring */
+    public function updateplace(Request $request, $clearMissing)
+    {
+        $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('id'));
+
+        if (empty($place)) {
+            return new JsonResponse(['message' => 'Place not found']);
         }
 
         $form = $this->createForm(PlaceType::class, $place);
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), $clearMissing);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
