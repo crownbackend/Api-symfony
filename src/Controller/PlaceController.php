@@ -20,7 +20,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"place"})
      * @Rest\Get("/places")
      * @param Request $request
      * @return $places
@@ -34,7 +34,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"place"})
      * @Rest\Get("/places/{id}")
      * @param Request $request
      * @return $place
@@ -52,7 +52,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"place"})
      * @Rest\Post("/places")
      * @param Request $request
      * @return
@@ -76,7 +76,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT, serializerGroups={"place"})
      * @Rest\Delete("/places/{id}")
      * @param Request $request
      */
@@ -92,7 +92,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"place"})
      * @Rest\Put("/places/{id}")
      * @param Request $request
      */
@@ -103,7 +103,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"place"})
      * @Rest\Patch("/places/{id}")
      * @param Request $request
      */
@@ -134,30 +134,6 @@ class PlaceController extends Controller
         }
 
     }
-
-    /*
-    App\Entity\Place:
-        attributes:
-            id:
-                groups: ['place', 'price']
-            name:
-                groups: ['place', 'price']
-            address:
-                groups: ['place', 'price']
-            prices:
-                groups: ['place']
-
-    App\Entity\Price:
-        attributes:
-            id:
-                groups: ['place', 'price']
-            type:
-                groups: ['place', 'price']
-            value:
-                groups: ['place', 'price']
-            place:
-                groups: ['price']
-     */
 
 
 
