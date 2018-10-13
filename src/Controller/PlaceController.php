@@ -85,9 +85,10 @@ class PlaceController extends Controller
         $em = $this->getDoctrine()->getManager();
         $place = $em->getRepository(Place::class)->find($request->get('id'));
         /* @var $place Place */
-
-        $em->remove($place);
-        $em->flush();
+        if($place) {
+            $em->remove($place);
+            $em->flush();
+        }
     }
 
 

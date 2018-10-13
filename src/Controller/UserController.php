@@ -68,8 +68,23 @@ class UserController extends Controller
         } else {
             return $form;
         }
+    }
 
+    /**
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     * @Rest\Delete("/users/{id}")
+     * @param Request $request
+     */
+    public function removeUserAction(Request $request) {
 
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($request->get('id'));
+        /** @var $user User */
+
+        if ($user) {
+            $em->remove($user);
+            $em->flush();
+        }
     }
 
 
