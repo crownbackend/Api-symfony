@@ -20,7 +20,7 @@ class Price
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
-     * @Assert\Choice(choices="{less_than_12, for_all}")
+     * @Assert\Choice(choices={"less_than_12", "for_all"})
      */
     private $type;
 

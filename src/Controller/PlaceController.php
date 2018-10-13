@@ -7,14 +7,18 @@ use App\Form\PlaceType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 
 class PlaceController extends Controller
 {
+
+    private function placeNotFound()
+    {
+        return View::create(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+    }
+
     /**
      * @Rest\View()
      * @Rest\Get("/places")
@@ -41,7 +45,7 @@ class PlaceController extends Controller
         /* @var $place Place */
 
         if(empty($place)) {
-            return View::create(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+            return $this->placeNotFound();
         }
 
         return $place;
@@ -114,7 +118,7 @@ class PlaceController extends Controller
         $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('id'));
 
         if (empty($place)) {
-            return View::create(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+            return $this->placeNotFound();
         }
 
         $form = $this->createForm(PlaceType::class, $place);
@@ -130,6 +134,30 @@ class PlaceController extends Controller
         }
 
     }
+
+    /*
+            App\Entity\Place:
+        attributes:
+            id:
+                groups: ['place', 'price']
+            name:
+                groups: ['place', 'price']
+            address:
+                groups: ['place', 'price']
+            prices:
+                groups: ['place']
+
+    App\Entity\Price:
+        attributes:
+            id:
+                groups: ['place', 'price']
+            type:
+                groups: ['place', 'price']
+            value:
+                groups: ['place', 'price']
+            place:
+                groups: ['price']
+     */
 
 
 
