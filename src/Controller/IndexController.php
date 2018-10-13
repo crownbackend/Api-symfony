@@ -17,11 +17,21 @@ class IndexController extends Controller
      */
     public function getPlaces():Response {
 
-        return new JsonResponse([
-            new Place('Tour Eiffel', '5 Avenue Anatole France, 75007 Paris'),
-            new Place("Mont-Saint-Michel", "50170 Le Mont-Saint-Michel"),
-            new Place("Château de Versailles", "Place d'Armes, 78000 Versailles"),
-        ]);
+        $places = $this->getDoctrine()->getRepository(Place::class)->findAll();
+
+        /* @var $places Place[] */
+
+        $formated = [];
+        foreach ($places as $place) {
+            $formated[] = [
+                'id' => $place->getId(),
+                'name' => $place->getName(),
+                'address' => $place->getAddress(),
+            ];
+        }
+
+        return new JsonResponse($formated);
+
     }
 
 }
