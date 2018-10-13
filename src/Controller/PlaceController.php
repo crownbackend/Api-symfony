@@ -48,6 +48,24 @@ class PlaceController extends Controller
         return $place;
     }
 
+    /**
+     * @Rest\View()
+     * @Rest\Post("/places")
+     * @param Request $request
+     * @return
+     */
+    public function postPlacesAction(Request $request)
+    {
+
+        return [
+            'payload' => [
+                $request->get('name'),
+                $request->get('address')
+            ]
+        ];
+
+    }
+
 
 
 

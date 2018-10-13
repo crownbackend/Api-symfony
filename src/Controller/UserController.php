@@ -40,7 +40,7 @@ class UserController extends Controller
         /* @var $user User */
 
         if(empty($user)) {
-            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
 
         return $user;
