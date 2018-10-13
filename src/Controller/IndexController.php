@@ -17,7 +17,8 @@ class IndexController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function getPlaces(Request $request):Response {
+    public function getPlaces(Request $request):Response
+    {
 
         $places = $this->getDoctrine()->getRepository(Place::class)->findAll();
 
@@ -40,7 +41,8 @@ class IndexController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function getPlaceAction(Request $request): Response {
+    public function getPlaceAction(Request $request): Response
+    {
 
         $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('place_id'));
         /* @var $place Place */

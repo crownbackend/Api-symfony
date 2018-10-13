@@ -16,7 +16,8 @@ class UserController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function getUsersAction(Request $request): Response {
+    public function getUsersAction(Request $request): Response
+    {
 
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         /* @var $users User[] */
@@ -32,5 +33,43 @@ class UserController extends Controller
         }
         return new JsonResponse($formated);
     }
+
+    /**
+     * @Route("/users/{id}")
+     * @param Request $request
+     * @return Response
+     */
+    public function getUserAction(Request $request): Response
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
+        /* @var $user User */
+
+        $formatted = [
+            'id' => $user->getId(),
+            'firstName' => $user->getFirstName(),
+            'lastName' => $user->getLastName(),
+            'email' => $user->getEmail()
+        ];
+        
+        return new JsonResponse($formatted);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
