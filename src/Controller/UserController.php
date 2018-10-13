@@ -44,6 +44,10 @@ class UserController extends Controller
         $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
         /* @var $user User */
 
+        if(empty($user)) {
+            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+        }
+
         $formatted = [
             'id' => $user->getId(),
             'firstName' => $user->getFirstName(),

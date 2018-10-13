@@ -47,6 +47,10 @@ class IndexController extends Controller
         $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('place_id'));
         /* @var $place Place */
 
+        if(empty($place)) {
+            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+        }
+
         $formatted = [
             'id' => $place->getId(),
             'name' => $place->getName(),
