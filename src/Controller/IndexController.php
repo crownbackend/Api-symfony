@@ -23,17 +23,54 @@ class IndexController extends Controller
 
         /* @var $places Place[] */
 
-        $formated = [];
+        $formatted = [];
         foreach ($places as $place) {
-            $formated[] = [
+            $formatted[] = [
                 'id' => $place->getId(),
                 'name' => $place->getName(),
                 'address' => $place->getAddress(),
             ];
         }
 
-        return new JsonResponse($formated);
-
+        return new JsonResponse($formatted);
     }
+
+    /**
+     * @Route("/places/{place_id}", methods="GET", name="places_one", requirements={"place_id" = "\d+"})
+     * @param Request $request
+     * @return Response
+     */
+    public function getPlaceAction(Request $request): Response {
+
+        $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('place_id'));
+        /* @var $place Place */
+
+        $formatted = [
+            'id' => $place->getId(),
+            'name' => $place->getName(),
+            'address' => $place->getAddress()
+        ];
+
+        return new JsonResponse($formatted);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
