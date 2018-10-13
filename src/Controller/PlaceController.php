@@ -74,6 +74,22 @@ class PlaceController extends Controller
 
     }
 
+    /**
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     * @Rest\Delete("/places/{id}")
+     * @param Request $request
+     */
+    public function removePlaceAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $place = $em->getRepository(Place::class)->find($request->get('id'));
+        /* @var $place Place */
+
+        $em->remove($place);
+        $em->flush();
+    }
+
 
 
 
