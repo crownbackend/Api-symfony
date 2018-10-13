@@ -23,7 +23,6 @@ class PlaceController extends Controller
      */
     public function getPlaces(Request $request)
     {
-
         $places = $this->getDoctrine()->getRepository(Place::class)->findAll();
         /* @var $places Place[] */
 
@@ -38,7 +37,6 @@ class PlaceController extends Controller
      */
     public function getPlaceAction(Request $request)
     {
-
         $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('id'));
         /* @var $place Place */
 
@@ -57,7 +55,6 @@ class PlaceController extends Controller
      */
     public function postPlacesAction(Request $request)
     {
-
         $place = new Place();
         $form = $this->createForm(PlaceType::class, $place);
 
@@ -81,7 +78,6 @@ class PlaceController extends Controller
      */
     public function removePlaceAction(Request $request)
     {
-
         $em = $this->getDoctrine()->getManager();
         $place = $em->getRepository(Place::class)->find($request->get('id'));
         /* @var $place Place */
@@ -97,12 +93,12 @@ class PlaceController extends Controller
      * @param Request $request
      * @return
      */
-    public function putPlaceAction(Request $request) {
-
+    public function putPlaceAction(Request $request)
+    {
         $place = $this->getDoctrine()->
                  getRepository(Place::class)->find($request->get('id'));
-
-        /** @var $place Place */
+        /* @var $place Place */
+        
         if(empty($place)) {
             return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
         }

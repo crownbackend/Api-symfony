@@ -53,7 +53,8 @@ class UserController extends Controller
      * @param Request $request
      * @return
      */
-    public function postUserAction(Request $request) {
+    public function postUserAction(Request $request)
+    {
 
         $user = new User();
         $form =$this->createForm(UserType::class, $user);
@@ -75,16 +76,46 @@ class UserController extends Controller
      * @Rest\Delete("/users/{id}")
      * @param Request $request
      */
-    public function removeUserAction(Request $request) {
+    public function removeUserAction(Request $request)
+    {
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($request->get('id'));
-        /** @var $user User */
+        /* @var $user User */
 
         if ($user) {
             $em->remove($user);
             $em->flush();
         }
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Put("/users/{id}")
+     * @param Request $request
+     * @return
+     */
+    public function putUserAction(Request $request)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
+        /* @var $user User */
+
+        if (empty($user)) {
+            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->merge($user);
+            $em->flush();
+            return $user;
+        } else {
+            return $form;
+        }
+
     }
 
 
