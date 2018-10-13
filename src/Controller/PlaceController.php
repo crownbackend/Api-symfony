@@ -41,7 +41,7 @@ class PlaceController extends Controller
         /* @var $place Place */
 
         if(empty($place)) {
-            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+            return View::create(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
         }
 
         return $place;
@@ -114,7 +114,7 @@ class PlaceController extends Controller
         $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('id'));
 
         if (empty($place)) {
-            return new JsonResponse(['message' => 'Place not found']);
+            return View::create(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
         }
 
         $form = $this->createForm(PlaceType::class, $place);
