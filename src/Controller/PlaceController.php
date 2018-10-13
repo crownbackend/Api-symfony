@@ -18,28 +18,24 @@ class PlaceController extends Controller
      * @Rest\View()
      * @Rest\Get("/places")
      * @param Request $request
-     * @return View
+     * @return $places
      */
     public function getPlaces(Request $request)
     {
 
         $places = $this->getDoctrine()->getRepository(Place::class)->findAll();
-
         /* @var $places Place[] */
 
-        $view = View::create($places);
-        $view->setFormat('json');
-
-        return $view;
+        return $places;
     }
 
     /**
      * @Rest\View()
      * @Rest\Get("/places/{id}")
      * @param Request $request
-     * @return Response
+     * @return $place
      */
-    public function getPlaceAction(Request $request): Response
+    public function getPlaceAction(Request $request)
     {
 
         $place = $this->getDoctrine()->getRepository(Place::class)->find($request->get('id'));
@@ -49,13 +45,7 @@ class PlaceController extends Controller
             return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $formatted = [
-            'id' => $place->getId(),
-            'name' => $place->getName(),
-            'address' => $place->getAddress()
-        ];
-
-        return new JsonResponse($formatted);
+        return $place;
     }
 
 
