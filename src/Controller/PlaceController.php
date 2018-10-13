@@ -49,7 +49,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/places")
      * @param Request $request
      * @return
@@ -57,12 +57,14 @@ class PlaceController extends Controller
     public function postPlacesAction(Request $request)
     {
 
-        return [
-            'payload' => [
-                $request->get('name'),
-                $request->get('address')
-            ]
-        ];
+        $place = new Place();
+        $place->setName($request->get('name'))->setAddress($request->get('address'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($place);
+        $em->flush();
+
+        return $place;
 
     }
 
