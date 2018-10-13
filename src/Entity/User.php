@@ -25,8 +25,8 @@ class User
      * @Assert\Length(
      *      min = 2,
      *      max = 70,
-     *      minMessage = "Il faut au minimum {{ limit }} caractères",
-     *      maxMessage = "Il faut au maximum {{ limit }} caractères"
+     *      minMessage = "Il faut au minimum {{ limit }} caractères.",
+     *      maxMessage = "Il faut au maximum {{ limit }} caractères."
      * )
      */
     private $firstName;
@@ -37,8 +37,8 @@ class User
      * @Assert\Length(
      *      min = 2,
      *      max = 70,
-     *      minMessage = "Il faut au minimum {{ limit }} caractères",
-     *      maxMessage = "Il faut au maximum {{ limit }} caractères"
+     *      minMessage = "Il faut au minimum {{ limit }} caractères.",
+     *      maxMessage = "Il faut au maximum {{ limit }} caractères."
      * )
      */
     private $lastName;
