@@ -107,7 +107,7 @@ class PlaceController extends Controller
     {
         return $this->updateplace($request, false);
     }
-    
+
     /* refactoring */
     public function updateplace(Request $request, $clearMissing)
     {

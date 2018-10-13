@@ -97,6 +97,21 @@ class UserController extends Controller
      */
     public function putUserAction(Request $request)
     {
+        return $this->updateUser($request, true);
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Patch("/users/{id}")
+     * @param Request $request
+     */
+    public function patchPlaceAction(Request $request)
+    {
+        return $this->updateUser($request, false);
+    }
+
+    public function updateUser(Request $request, $clearMissing)
+    {
         $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
         /* @var $user User */
 
@@ -105,7 +120,7 @@ class UserController extends Controller
         }
 
         $form = $this->createForm(UserType::class, $user);
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), $clearMissing);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -115,7 +130,6 @@ class UserController extends Controller
         } else {
             return $form;
         }
-
     }
 
 
