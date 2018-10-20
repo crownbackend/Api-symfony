@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -58,15 +59,21 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank(groups={"New, FullUpdate"})
-     * @Assert\Length("min = 4, max = 50")
+     * @Assert\Length(min = 4, max = 50)
      */
     private $plainPassword;
 
+    /**
+     * @groups({"user", "auth-token"})
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @groups({"user", "auth-token"})
+     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
@@ -79,6 +86,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @groups({"user", "auth-token"})
+     */
     public function getLastName(): ?string
     {
         return $this->lastName;
@@ -91,6 +101,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @groups({"user", "auth-token"})
+     */
     public function getEmail(): ?string
     {
         return $this->email;
