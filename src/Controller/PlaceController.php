@@ -47,7 +47,6 @@ class PlaceController extends Controller
         if(empty($place)) {
             return $this->placeNotFound();
         }
-
         return $place;
     }
 

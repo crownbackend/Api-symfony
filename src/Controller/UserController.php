@@ -22,7 +22,6 @@ class UserController extends Controller
      */
     public function getUsersAction(Request $request)
     {
-
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         /* @var $users User[] */
 
@@ -48,20 +47,24 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"user"})
      * @Rest\Post("/users")
      * @param Request $request
      * @return
      */
-    public function postUserAction(Request $request)
+    public function postUsersAction(Request $request)
     {
-
         $user = new User();
-        $form =$this->createForm(UserType::class, $user);
+        $form =$this->createForm(UserType::class, $user, ['validation_groups' => ['Default' => 'New']]);
 
         $form->submit($request->request->all());
 
         if($form->isValid()) {
+            // encode the password for the bdd
+            $encoder = $this->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($encoded);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
